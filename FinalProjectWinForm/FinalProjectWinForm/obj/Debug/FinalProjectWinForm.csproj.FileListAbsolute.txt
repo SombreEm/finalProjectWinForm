@@ -8,3 +8,4 @@ D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.cspr
 D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.csproj.CoreCompileInputs.cache
 D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.exe
 D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.pdb
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.Form2.resources

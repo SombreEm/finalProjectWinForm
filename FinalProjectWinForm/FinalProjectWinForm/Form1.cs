@@ -7,153 +7,101 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static FinalProjectWinForm.Form1.PlayerCard;
 
 namespace FinalProjectWinForm
 {
     public partial class Form1 : Form
     {
-        private PlayerCard playerCard;
-        private LottoGame lottoGame;
-        private int winAttempts = 0;
-        private int consecutiveWins = 0;
-        private int consecutiveLosses = 0;
+        Random rand = new Random();
+        List<int> numbers = new List<int>();
+        Form2 f;
+        public Button[] buttons;
+        private int redButtonCount = 0;
+        private bool gameStarted = false;
+
         public Form1()
         {
             InitializeComponent();
-            lottoGame = new LottoGame();
-        }
-        private void DisplayPlayerNumbers()
-        {
-            label9.Text = string.Join(", ", playerCard.Numbers);
-        }
-
-        public class PlayerCard
-        {
-            public List<int> Numbers { get; private set; }
-
-            public PlayerCard(int numberOfNumbers)
+            timer1.Start();
+            InitializeButtonTexts();
+            buttons = new Button[] {
+                button2, button3, button4, button5, button6, button7, button8, button9,
+                button10, button11, button12, button13, button14, button15, button16, button17,
+                button18, button19, button20, button21, button22
+            };
+            foreach (var button in buttons)
             {
-                Numbers = GenerateRandomNumbers(numberOfNumbers);
-            }
-
-            private List<int> GenerateRandomNumbers(int numberOfNumbers)
-            {
-                Random random = new Random();
-                HashSet<int> numbers = new HashSet<int>();
-
-                while (numbers.Count < numberOfNumbers)
-                {
-                    int num = random.Next(1, 50);
-                    numbers.Add(num);
-                }
-
-                return numbers.ToList();
+                button.MouseDown += Button_MouseDown;
             }
         }
 
-        public class LottoGame
+        private void InitializeButtonTexts()
         {
-            public List<int> GameNumbers { get; private set; }
-            public int Wins { get; private set; }
-            public int Losses { get; private set; }
+            button2.Text = "2";
+            button3.Text = "12";
+            button4.Text = "16";
+            button5.Text = "52";
+            button6.Text = "3";
+            button7.Text = "10";
+            button8.Text = "43";
+            button9.Text = "23";
+            button10.Text = "71";
+            button11.Text = "66";
+            button12.Text = "18";
+            button13.Text = "27";
+            button14.Text = "33";
+            button15.Text = "99";
+            button16.Text = "6";
+            button17.Text = "51";
+            button18.Text = "39";
+            button19.Text = "77";
+            button20.Text = "81";
+            button21.Text = "92";
+            button22.Text = "84";
+        }
 
-            public LottoGame()
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            int randomNumber;
+            do
             {
-                GameNumbers = new List<int>();
-                Wins = 0;
-                Losses = 0;
+                randomNumber = rand.Next(0, 101);
+            } while (numbers.Contains(randomNumber));
+
+            numbers.Add(randomNumber);
+
+            if (numbers.Count >= 100)
+            {
+                timer1.Stop();
             }
+        }
 
-            public void GenerateGameNumbers(List<int> excludedNumbers)
+        private void Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            if (clickedButton != null)
             {
-                GameNumbers = GenerateRandomNumbers(excludedNumbers);
-            }
+                clickedButton.BackColor = Color.Red;
+                clickedButton.Enabled = false;
+                redButtonCount++;
 
-            private List<int> GenerateRandomNumbers(List<int> excludedNumbers)
-            {
-                Random random = new Random();
-                HashSet<int> numbers = new HashSet<int>();
-
-                while (numbers.Count < 6)
+                if (redButtonCount == buttons.Length)
                 {
-                    int num = random.Next(1, 50);
-                    if (!excludedNumbers.Contains(num))
-                    {
-                        numbers.Add(num);
-                    }
+                    label2.Text = "Бінго";
                 }
-
-                return numbers.ToList();
-            }
-
-            public bool CheckWin(PlayerCard playerCard, ref int winAttempts)
-            {
-                bool hasWin = playerCard.Numbers.Any(num => GameNumbers.Contains(num));
-
-                if (winAttempts >= 5)
-                {
-                    hasWin = true;
-                    winAttempts = 0; 
-                }
-
-                if (hasWin)
-                {
-                    Wins++;
-                }
-                else
-                {
-                    Losses++;
-                }
-
-                return hasWin;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int numberOfNumbers;
-            if (!int.TryParse(textBox1.Text, out numberOfNumbers) || numberOfNumbers < 1 || numberOfNumbers > 10)
+            if (!gameStarted)
             {
-                MessageBox.Show("Введіть коректну кількість чисел (від 1 до 10).");
-                return;
+                timer1.Start();
+                InitializeButtonTexts();
+                f = new Form2(numbers);
+                f.Show();
+                gameStarted = true;
             }
-
-            playerCard = new PlayerCard(numberOfNumbers);
-            lottoGame.GenerateGameNumbers(playerCard.Numbers);
-            bool isWin = lottoGame.CheckWin(playerCard, ref winAttempts);
-
-            if (!isWin) winAttempts++;
-
-            label7.Text =string.Join(", ", lottoGame.GameNumbers);
-
-            if (isWin)
-            {
-                consecutiveWins++;
-                consecutiveLosses = 0;
-                if (consecutiveWins == 5)
-                {
-                    MessageBox.Show("Ви виграли 1000 грн!");
-                    consecutiveWins = 0;
-                }
-                label11.Text = "Ви виграли!";
-            }
-            else
-            {
-                consecutiveLosses++;
-                consecutiveWins = 0;
-                if (consecutiveLosses == 5)
-                {
-                    MessageBox.Show("Ви програли 1000 грн!");
-                    consecutiveLosses = 0;
-                }
-                label11.Text = "Спробуйте ще раз!";
-            }
-
-            label4.Text = lottoGame.Wins.ToString();
-            label5.Text = lottoGame.Losses.ToString();
-
-            DisplayPlayerNumbers();
         }
     }
 }
