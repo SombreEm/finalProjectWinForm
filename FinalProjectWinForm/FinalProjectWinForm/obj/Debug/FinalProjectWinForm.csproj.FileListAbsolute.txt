@@ -1,0 +1,10 @@
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\bin\Debug\FinalProjectWinForm.exe.config
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\bin\Debug\FinalProjectWinForm.exe
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\bin\Debug\FinalProjectWinForm.pdb
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.csproj.AssemblyReference.cache
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.Form1.resources
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.Properties.Resources.resources
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.csproj.GenerateResource.cache
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.csproj.CoreCompileInputs.cache
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.exe
+D:\C#\FinalProjectWinForm\FinalProjectWinForm\obj\Debug\FinalProjectWinForm.pdb
